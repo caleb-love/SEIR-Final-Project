@@ -126,7 +126,7 @@ const Home = () => {
                     />
                     <MenuContainer
                         key={'attractions'}
-                        title={'Activities'}
+                        title={'Attractions'}
                         imageSrc={Attractions}
                         type={type}
                         setType={setType}
@@ -142,7 +142,7 @@ const Home = () => {
 
                 {isLoading ? (
                     <View className='flex-1 items-center justify-center'>
-                        <ActivityIndicator size='large' color='gray' />
+                        <ActivityIndicator size='large' color='red' />
                     </View>
                 ) : (
                     <View>
