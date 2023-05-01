@@ -6,10 +6,6 @@ import * as AuthSession from 'expo-auth-session'
 import * as Google from 'expo-auth-session/providers/google'
 import * as WebBrowser from 'expo-web-browser'
 
-// web: 182665401528-q28knbe49pl3pbmirf4r0j9948cehom5.apps.googleusercontent.com
-// secret: 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
-// iOS: 182665401528-spk73iqsg2bo8md3dri2jud6fvru31mv.apps.googleusercontent.com
-
 WebBrowser.maybeCompleteAuthSession()
 
 
@@ -42,7 +38,7 @@ export default function Login({ navigation }) {
     async function fetchUserInfo() {
         let response = await fetch('https://googleapis.com/userinfo/v2/me', {
             headers: {
-                Authorization: `Bearer ${accesstoken}`
+                Authorization: `Bearer ${accessToken}`
             }
         })
         const userInfo = await response.json()

@@ -42,7 +42,9 @@ export default {
       messagingSenderId: process.env.MESSAGING_SENDER_ID,
       appId: process.env.APP_ID,
       measurementId: process.env.MEASUREMENT_ID,
-      googleMapsAPI: process.env.GOOGLE_MAPS_API
+      googleMapsAPI: process.env.GOOGLE_MAPS_API,
+      OpenAiAPIKey: process.env.OPENAI_API_KEY,
+      XRapidAPIKey: process.env.X_RAPID_API_KEY,
     },
     "owner": "caleblove"
   }

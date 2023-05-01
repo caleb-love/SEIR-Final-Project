@@ -11,6 +11,8 @@ import { Dinder, Restaurants, Attractions, Hotels, NotFound, ChatGPT, SignOut, C
 import * as Animatable from 'react-native-animatable'
 import MenuContainer from '../components/MenuContainer'
 import IdeaContainer from '../components/IdeaContainer'
+import Constants from 'expo-constants'
+
 
 const Home = () => {
 
@@ -103,7 +105,7 @@ const Home = () => {
                             setTr_lng(details?.geometry?.viewport?.northeast?.lng)
                         }}
                         query={{
-                            key: 'AIzaSyDmM36u9bYLsETpdavP5RDrmzjhqSUlB6M',
+                            key: Constants.manifest.extra.GoogleMapsAPI,
                             language: 'en',
                             types: 'restaurant',
                         }}

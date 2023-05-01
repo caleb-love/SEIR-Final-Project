@@ -1,11 +1,13 @@
 import { View, Text, FlatList, TouchableOpacity, TextInput, SafeAreaView, KeyboardAvoidingView, Platform } from 'react-native'
 import React, { useState } from 'react'
+import Constants from 'expo-constants'
+
 import axios from 'axios'
 
 const ChatGPT = () => {
     const [data, setData] = useState([])
     const [textInput, setTextInput] = useState('')
-    const apiKey = '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'
+    const OpenAiAPIKey = Constants.manifest.extra.OpenAiAPIKey
     const apiUrl = 'https://api.openai.com/v1/completions'
 
     const handleSend = async () => {
@@ -19,7 +21,7 @@ const ChatGPT = () => {
             }, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiKey}`
+                    'Authorization': `Bearer ${OpenAiAPIKey}`
                 }
             })
             const text = response.data.choices[0].text

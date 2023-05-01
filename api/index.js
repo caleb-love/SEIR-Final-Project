@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Constants from 'expo-constants'
 
 export const getPlaceData = async (bl_lat, bl_lng, tr_lat, tr_lng, type) => {
     try {
@@ -17,7 +18,7 @@ export const getPlaceData = async (bl_lat, bl_lng, tr_lat, tr_lng, type) => {
                 },
                 headers: {
                     'content-type': 'application/octet-stream',
-                    'X-RapidAPI-Key': 'fd32f87752msh735dfb56398f9aap10c827jsnebe9a2825009',
+                    'X-RapidAPI-Key': Constants.manifest.extra.XRapidAPIKey,
                     'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com'
                 }
             }
