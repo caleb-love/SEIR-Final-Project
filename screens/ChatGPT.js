@@ -43,7 +43,7 @@ const ChatGPT = () => {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#F5F5F5', justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ flex: 1, marginTop: 50, marginBottom: 20 }}>
-                <Text style={{ fontSize: 30, fontWeight: 'bold', textAlign: 'center', color: '#333' }}>Answer my Questions</Text>
+                <Text style={{ fontSize: 30, fontWeight: 'bold', textAlign: 'center', color: '#333' }}>Ask away!</Text>
             </View>
             <View style={{ flex: 5, width: '100%', paddingHorizontal: 20 }}>
                 <FlatList
@@ -63,7 +63,7 @@ const ChatGPT = () => {
                         style={{ height: 50, backgroundColor: '#F5F5F5', borderWidth: 1, borderColor: '#333', borderRadius: 10, paddingHorizontal: 20, marginBottom: 10 }}
                         value={textInput}
                         onChangeText={text => setTextInput(text)}
-                        placeholder='Ask me for Dinner Ideas'
+                        placeholder='Ask me for Travel Ideas'
                         placeholderTextColor='#777'
                     />
                     <TouchableOpacity

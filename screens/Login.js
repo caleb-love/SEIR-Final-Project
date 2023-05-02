@@ -2,13 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { Text, View, TextInput, Image, SafeAreaView, TouchableOpacity, StatusBar, Alert, KeyboardAvoidingView } from 'react-native'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../config/firebase'
-import * as AuthSession from 'expo-auth-session'
 import * as Google from 'expo-auth-session/providers/google'
 import * as WebBrowser from 'expo-web-browser'
 
 WebBrowser.maybeCompleteAuthSession()
-
-
 
 export default function Login({ navigation }) {
 
@@ -45,15 +42,13 @@ export default function Login({ navigation }) {
         setUser(userInfo)
     }
 
-    
-
     return (
         <View className='flex-1 bg-gray-900'>
             <Image source={require('../assets/backImage.jpg')} className={'w-full h-340 absolute top-0 object-cover'} />
             <SafeAreaView className='flex-1 justify-center mx-30'>
-                <Text className='text-7xl self-center mb-60'>Dinder</Text>
+                <Text className='text-7xl self-center mb-60'>Twogether.</Text>
                 <View className='bg-white opacity-90 rounded-3xl'>
-                    <Text className='text-3xl font-bold text-gray-900 self-center pb-6'>Let's get Eating!</Text>
+                    <Text className='text-3xl font-bold text-gray-900 self-center pb-6'>Let's get Exploring!</Text>
                     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : null}>
                         <TextInput
                             className='bg-gray-100 h-14 mb-5 mx-10 rounded-lg text-lg px-3'

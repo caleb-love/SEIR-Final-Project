@@ -9,15 +9,15 @@ export default IdeaContainer = ({ imageSrc, title, location, data }) => {
     return (
         <TouchableOpacity
         onPress={() => navigation.navigate('Selection', { param: data })}
-        className='rounded-md border border-gray-300 space-y-2 px-3 py-2 shadow-md bg-gray-200 w-180 my-2'>
+        className='rounded-md border border-gray-300 space-y-2 px-3 py-2 shadow-md bg-gray-200 w-44 my-2'>
             <Image
-                sources={{ uri: imageSrc }}
+                source={{ uri: imageSrc }}
                 className='w-full h-40 rounded-md object-cover'
             />
 
             {title ? (
                 <>
-                    <Text className='text-gray-900 text-sm font-bold'>
+                    <Text className='text-gray-900 text-lg font-bold'>
                         {title?.length > 15 ? `${title.slice(0, 15)}..` : title}
                     </Text>
 

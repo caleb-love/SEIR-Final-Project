@@ -4,10 +4,11 @@ import { useNavigation } from '@react-navigation/native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ScrollView } from 'react-native-gesture-handler'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import { signOut, auth } from 'firebase/auth'
+import { signOut } from 'firebase/auth'
 import { getPlaceData } from '../api'
 import { Entypo } from '@expo/vector-icons'
 import { Dinder, Restaurants, Attractions, Hotels, NotFound, ChatGPT, SignOut, Chat } from '../assets'
+import { auth } from '../config/firebase'
 import * as Animatable from 'react-native-animatable'
 import MenuContainer from '../components/MenuContainer'
 import IdeaContainer from '../components/IdeaContainer'
@@ -20,7 +21,7 @@ const Home = () => {
 
     const [type, setType] = useState('restaurants')
     const [isLoading, setIsLoading] = useState(true)
-    const [mainData, setmainData] = useState([])
+    const [mainData, setMainData] = useState([])
     const [bl_lat, setBl_lat] = useState(null)
     const [bl_lng, setBl_lng] = useState(null)
     const [tr_lat, setTr_lat] = useState(null)
@@ -38,14 +39,18 @@ const Home = () => {
 
     useEffect(() => {
         setIsLoading(true)
-        getPlaceData(bl_lat, bl_lng, tr_lat, tr_lng)
+        getPlaceData(bl_lat, bl_lng, tr_lat, tr_lng, type)
             .then((data) => {
-                setmainData(data)
+                setMainData(data)
                 setInterval(() => {
                     setIsLoading(false)
                 }, 2000)
             })
     }, [bl_lat, bl_lng, tr_lat, tr_lng, type])
+
+    console.log('====================================');
+    console.log(type);
+    console.log('====================================');
 
     return (
 
@@ -147,7 +152,7 @@ const Home = () => {
                 ) : (
                     <View>
                         <View className='flex-row items-center justify-between px-10 mt-8'>
-                            <Text className='text-gray-900 text-xl font-bold'>Date Ideas</Text>
+                            <Text className='text-gray-900 text-xl font-bold'>Ideas</Text>
 
                             <TouchableOpacity className='flex-row items-center justify-center space-x-2'>
                                 <Text className='text-gray-900 text-l font-bold'>Look</Text>
@@ -164,7 +169,7 @@ const Home = () => {
                                             imageSrc={
                                                 data?.photo?.images?.medium?.url ?
                                                     data?.photo?.images?.medium?.url :
-                                                    'https://placehold.co/100x100.jpg'
+                                                    'https://placehold.co/550x550.jpg'
 
                                             }
                                             title={data?.name}
@@ -175,13 +180,12 @@ const Home = () => {
                                 </>
                             ) : (
                                 <>
-                                    <View className='items-center space-y-5'>
+                                    <View className='w-full items-center space-y-5'>
                                         <Text className='text-2xl text-gray-900 font-semibold'>
                                             No Places Found!
                                         </Text>
                                         <Image
                                             source={NotFound}
-                                            className='object-contain'
                                             resizeMode='contain'
                                         />
                                     </View>

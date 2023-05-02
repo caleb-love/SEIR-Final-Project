@@ -1,4 +1,4 @@
-export { default as Dinder } from './dinder.png'
+export { default as Dinder } from './twogether.png'
 export { default as Restaurants } from './restaurant.png'
 export { default as Attractions } from './attractions.png'
 export { default as Hotels } from './hotel.png'

@@ -1,83 +1,75 @@
-import React, { useState, useLayoutEffect, useCallback } from 'react'
-import { GiftedChat, Bubble } from 'react-native-gifted-chat'
-import { collection, addDoc, orderBy, query, onSnapshot } from 'firebase/firestore'
-import { auth, database } from '../config/firebase'
-import { Image } from 'react-native'
-import { ProfilePicture } from '../assets'
+import React, { useState, useLayoutEffect, useCallback } from 'react';
+import { GiftedChat, Bubble } from 'react-native-gifted-chat';
+import { collection, addDoc, orderBy, query, onSnapshot } from 'firebase/firestore';
+import { auth, database } from '../config/firebase';
+import { Image, TouchableOpacity } from 'react-native';
+import { ProfilePicture } from '../assets';
+
 
 export default function Chat() {
-
-    const [messages, setMessages] = useState([])
+    const [messages, setMessages] = useState([]);
 
     useLayoutEffect(() => {
-        const collectionRef = collection(database, 'chats')
-        const q = query(collectionRef, orderBy('createdAt', 'desc'))
+        const chatsRef = collection(database, 'chats');
+        const q = query(chatsRef, orderBy('createdAt', 'desc'));
 
-        const unsubscribe = onSnapshot(q, querySnapshot => {
-            setMessages(
-                querySnapshot.docs.map(doc => ({
-                    _id: doc.data()._id,
-                    createdAt: doc.data().createdAt.toDate(),
-                    text: doc.data().text,
-                    user: doc.data().user
-                }))
-            )
-        })
-        return unsubscribe
-    }, [])
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            const newMessages = querySnapshot.docs.map((doc) => {
+                const { _id, createdAt, text, user } = doc.data();
+                return {
+                    _id,
+                    createdAt: createdAt.toDate(),
+                    text,
+                    user,
+                };
+            });
+            setMessages(newMessages);
+        });
+        return unsubscribe;
+    }, []);
 
-    const onSend = useCallback((messages = []) => {
-        setMessages(previousMessages =>
-            GiftedChat.append(previousMessages, messages)
-        )
-        const { _id, createdAt, text, user } = messages[0]
+    const onSend = useCallback((newMessages = []) => {
+        const [message] = newMessages;
+        const { _id, createdAt, text, user } = message;
+
+        setMessages((previousMessages) => GiftedChat.append(previousMessages, newMessages));
+
         addDoc(collection(database, 'chats'), {
             _id,
             createdAt,
             text,
-            user
-        })
-    }, [])
-
-    const renderBubble = (props) => {
-        return (
-            <Bubble
-                {...props}
-                wrapperStyle={{
-                    right: {
-                        backgroundColor: 'grey'
-                    }
-                }}
-                textStyle={{
-                    right: {
-                        color: '#fff'
-                    }
-                }}
-            />
-        )
-    }
+            user,
+        });
+    }, []);
 
     return (
-        <GiftedChat
-            messages={messages}
-            showAvatarForEveryMessage={false}
-            showUserAvatar={false}
-            onSend={messages => onSend(messages)}
-            messagesContainerStyle={{
-                backgroundColor: '#fff'
-            }}
-            textInputStyle={{
-                backgroundColor: '#fff',
-                borderRadius: 20,
-            }}
-            user={{
-                _id: auth?.currentUser?.email,
-                avatar: <Image
-                source={ProfilePicture}
-                className='w-8 h-8'
+            <GiftedChat
+                messages={messages}
+                showAvatarForEveryMessage={false}
+                showUserAvatar={false}
+                onSend={onSend}
+                messagesContainerStyle={{
+                    backgroundColor: '#fff',
+                }}
+                textInputStyle={{
+                    backgroundColor: '#fff',
+                    borderRadius: 20,
+                    paddingHorizontal: 16,
+                    paddingVertical: 10,
+                    height: 50,
+                    fontSize: 16,
+                    lineHeight: 20,
+                    borderWidth: 1,
+                    borderColor: '#ccc',
+                    marginBottom: 8,
+                }}
+                user={{
+                    _id: auth?.currentUser?.email,
+                    avatar: (
+                        <Image source={ProfilePicture} style={{ width: 40, height: 40, borderRadius: 20 }} />
+                    ),
+                }}
             />
-            }}
-            renderBubble={renderBubble}
-        />
-    )
+
+    );
 }
